@@ -6,26 +6,32 @@ const orange = document.querySelector(".orange");
 
 var radioTotalCalls = 0;
 var radioTotalSms = 0;
+var factory = phone_bill();
+
+
+callTotalTwo.innerHTML = radioTotalCalls.toFixed(2);
+smsTotalTwo.innerHTML = radioTotalSms.toFixed(2);
+smsTotalTwo.innerHTML = radioTotalSms.toFixed(2);
 
 function radioBillTotal() {
     const checkedBtn = document.querySelector(".billItemTypeRadio:checked");
     var billItemType = checkedBtn.value;
     if (billItemType == "call") {
-        radioTotalCalls += 2.75;
+        factory.makeCall();
     }
     else if (billItemType == "sms") {
-        radioTotalSms += 0.75;
+        factory.makeSms();
     }
 
-    callTotalTwo.innerHTML = radioTotalCalls.toFixed(2);
-    smsTotalTwo.innerHTML = radioTotalSms.toFixed(2);
-    var radioTotal= radioTotalCalls + radioTotalSms;
-    var number = radioTotal.toFixed(2);
+    callTotalTwo.innerHTML = factory.callTotal().toFixed(2);
+    smsTotalTwo.innerHTML = factory.smsTotal().toFixed(2);
+
+    var number = factory.grandTotal().toFixed(2);
     
-    if (radioTotal >= 30 && radioTotal < 50) {
+    if (factory.grandTotal() >= 30 && factory.grandTotal() < 50) {
         orange.classList.add("warning");
     }
-    else if (radioTotal >= 50) {
+    if (factory.grandTotal() >= 50) {
         orange.classList.add("danger");
         number = 50;
     }
